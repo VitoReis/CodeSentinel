@@ -1,26 +1,31 @@
 .Chat {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    display: flex;
+    flex-direction: line;
+    padding-left: 5rem;
+    padding-right: 5rem;
     justify-content: center;
 }
 
 .UserArea {
     display: flex;
-    flex: 1;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .Title {
     margin-top: 1rem;
-    color: #ee0a0ae1;
+    color: transparent;
+    font-style: italic;
     font-size: 35px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #ee0a0ae1;
 }
 
 .UserArea .UserEntry {
     width: 30rem;
     height: 25rem;
+    font-size: 20px;
     margin: 1rem;
     padding: 0.5rem;
     background-color: #3a3a3a;
@@ -28,26 +33,35 @@
     border-radius: 10px;
     resize: none;
     color: #FFFFFF;
-    font-size: 20px;
 }
 
 .UserArea .UserEntry:focus {
     outline: 2px solid #ee0a0ae1;
 }
 
-.UserArea .SendButton {
-    width: 7rem;
-    height: 2rem;
-    font-size: 18px;
-    border: 1px solid #ee0a0ae1;
-    border-radius: 10px;
-    background-color: #282828;
+.UserArea .ButtonsArea {
+    display: flex;
+    flex-direction: line;
+}
+
+.UserArea .ButtonsArea .Buttons {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    border: 2px solid #ee0a0ae1;
+    border-radius: 100%;
+    background-color: #101010;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
     margin-bottom: 1rem;
     color: #ee0a0ae1;
     transition: 0.3s;
 }
 
-.UserArea .SendButton:hover {
+.UserArea .ButtonsArea .Buttons:hover {
     background-color: #ee0a0ae1;
     color: #FFFFFF;
     cursor: pointer;
@@ -55,7 +69,6 @@
 
 .ResponseArea {
     display: flex;
-    flex: 1;
     flex-direction: column;
     align-items: center;
 }
@@ -63,17 +76,20 @@
 .ResponseArea .ResponseText {
     width: 30rem;
     height: 25rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: 1rem;
-    margin-right: 4rem;
-    font-size: 25px;
+    font-size: 20px;
+    margin: 1rem;
+    padding: 0.5rem;
     color: #FFFFFF;
+    border: 2px solid #ee0a0ae1;
+    border-radius: 10px;
     text-align: justify;
-    padding: 1rem;
     max-width: 100%;
     max-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     white-space: pre-wrap;
+}
+
+.Dimmed {
+    filter: brightness(60%) blur(5px) grayscale(80%);
 }

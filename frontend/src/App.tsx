@@ -1,10 +1,11 @@
 import React from 'react';
 import Chat from './components/Chat';
+import Header from './components/Header';
 
 const App: React.FC = () => {
   return (
     <>
-      <h1>Code Sentinel</h1>
+      <Header/>
       <div className="App">
         <Chat />
       </div>

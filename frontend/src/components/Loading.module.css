@@ -1,0 +1,116 @@
+.Robot {
+    display: flex;
+    flex-direction: line;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+
+.Head {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 6rem;
+    height: 7rem;
+    border-radius: 100%;
+    background: white;
+    padding: 0.25rem;
+    overflow: hidden;
+}
+
+.Forehead {
+    display: flex;
+    flex-direction: line;
+}
+
+.Dots {
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 100%;
+    background: #ee0a0ae1;
+    margin: 0.15rem;
+}
+
+.Lines {
+    width: 0.25rem;
+    height: 1.5rem;
+    border-radius: 25%;
+    background: #ee0a0ae1;
+    margin-top: 0.25rem;
+}
+
+.Eyes {
+    display: flex;
+    flex-direction: line;
+}
+
+.Eye {
+    width: 2rem;
+    height: 2rem;
+    background: radial-gradient(closest-side,#000000, #282828);  
+    border-radius: 100%;
+    overflow: hidden;
+    margin: 0.25rem;
+}
+
+.Iris {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    height: 40%;
+    background: radial-gradient(#000000, #101010);
+    border-radius: 50%;
+    border: 0.25rem double #ee0a0ae1;
+    box-shadow: 0.5rem 0.5rem 1rem #880b0be1;
+    animation: look 3s infinite;
+}
+
+@keyframes look {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+    }
+    16% {
+        transform: translate(-50%, -10%) rotateX(30deg) rotateY(0deg);
+    }
+    32% {
+        transform: translate(-90%, -50%) rotateX(0deg) rotateY(30deg);
+    }
+    64% {
+        transform: translate(-50%, -10%) rotateX(30deg) rotateY(0deg);
+    }
+    76% {
+        transform: translate(-10%, -50%) rotateX(0deg) rotateY(-30deg);
+    }
+}
+
+.Ear {
+    width: 7.5rem;
+    height: 2rem;
+    background: linear-gradient(to bottom, #494949, #252525);
+    border-radius: 10%;
+    margin-top: 0.15rem;
+    margin-bottom: 0.15rem;
+}
+
+.Mouth {
+    position: absolute;
+    top: 80%;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border-radius: 100%;
+    border: 0.10rem solid #282828; 
+}
+
+.Neck {
+    position: absolute;
+    top: 100%;
+    width: 2.5rem;
+    height: 4rem;
+    background: linear-gradient(to bottom, #494949, #000000);
+}
