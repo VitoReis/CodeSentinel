@@ -1,0 +1,79 @@
+.Chat {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    justify-content: center;
+}
+
+.UserArea {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Title {
+    margin-top: 1rem;
+    color: #ee0a0ae1;
+    font-size: 35px;
+}
+
+.UserArea .UserEntry {
+    width: 30rem;
+    height: 25rem;
+    margin: 1rem;
+    padding: 0.5rem;
+    background-color: #3a3a3a;
+    border: 0px;
+    border-radius: 10px;
+    resize: none;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
+.UserArea .UserEntry:focus {
+    outline: 2px solid #ee0a0ae1;
+}
+
+.UserArea .SendButton {
+    width: 7rem;
+    height: 2rem;
+    font-size: 18px;
+    border: 1px solid #ee0a0ae1;
+    border-radius: 10px;
+    background-color: #282828;
+    margin-bottom: 1rem;
+    color: #ee0a0ae1;
+    transition: 0.3s;
+}
+
+.UserArea .SendButton:hover {
+    background-color: #ee0a0ae1;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.ResponseArea {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ResponseArea .ResponseText {
+    width: 30rem;
+    height: 25rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 4rem;
+    font-size: 25px;
+    color: #FFFFFF;
+    text-align: justify;
+    padding: 1rem;
+    max-width: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
