@@ -6,7 +6,7 @@
     padding-right: 1rem;
     background: linear-gradient(to right, #282828, #202020);
     color: #ee0a0ae1;
-    height: 5rem;
+    height: 4rem;
     justify-content: left;
     align-items: center;
 }
@@ -21,7 +21,7 @@
 }
 
 .Header .Images {
-    width: 4rem;
+    width: 3.5rem;
     border-radius: 100%;
     margin-right: 1rem;
 }
