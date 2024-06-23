@@ -2,38 +2,71 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import axios from 'axios';
+import { Stream } from 'stream';
 
+const fs = require('fs').promises;
 const app = express();
 const port = 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
+const router = require('./routes')
+app.use(router)
 
-app.post('/api/send-code', async (req, res) => {
-  const { code } = req.body;
-  const prompt: string = "Liste em topicos as vulnerabilidades do código a seguir, caso não haja apenas diga que não há, responda em portugues do brasil:" + code
-
+const configureSentinel = async () => {
   try {
-    let fullResponse : string = "";
-    let done: boolean = false;
-    const response = await axios.post('http://localhost:11434/api/generate', {
-      model: "mistral", 
-      prompt: prompt
+    console.log("Generating embeds...")
+    const data = await fs.readFile("./src/embeddings/vulnerabilities.json", "utf8");
+
+    const response = await axios.post("http://localhost:11434/api/embeddings", {
+      model:"mistral",
+      prompt: data,
     });
 
-    const resultLines = response.data.trim().split('\n');;
-    resultLines.forEach((line: string) => {
-      const part = JSON.parse(line);
-      fullResponse += part.response;
-      done = part.done;
-    });
-
-    res.json({ response: fullResponse });
+    if (response.status === 200) {
+      console.log("Successfully generated embeds");
+    } else {
+      console.log("Error generating embeds:", response.data);
+    }
   } catch (error) {
-    res.status(500).send('Erro ao processar o código');
+    console.log("Error generating embeds", error);
+    
   }
-});
+  try {
+    console.log("Creating modelfile...")
+    const modelfile = `
+    FROM mistral
+    SYSTEM Você é um verificador de vulnerabilidade em códigos, sempre responda em português do Brasil, e sempre nos seguintes em tópicos "Descrição", "Severidade" e "Como solucionar o problema"
+    `
+    const response = await axios.post("http://localhost:11434/api/create", {
+      model: "mistral",
+      modelfile: modelfile,
+      stream: false
+    });
+    if(response.status == 200){
+      console.log("Modelfile successfully created");
+      return true
+    }else {
+      console.log("Error creating modelfile:", response.data);
+    }
+  } catch (error) {
+    console.log("Error creating modelfile:", error);
+  }
+};
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+const startServer = async () => {
+  try {
+    const configurated = await configureSentinel();
+    if(configurated){
+      app.listen(port, () => {
+        console.log(`Server running on http://localhost:${port}`);
+      });
+    }else{
+      console.log("Unable to start server")
+    }
+  } catch (error) {
+    console.log("Unable to start server", error)
+  }
+};
+
+startServer();

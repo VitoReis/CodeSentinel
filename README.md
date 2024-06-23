@@ -1,4 +1,7 @@
 # CodeSentinel
+## IA
+Ollama mistral
+
 ## Backend creation
 npm init -y
 
@@ -7,6 +10,8 @@ npm install express cors body-parser axios
 npm install -D typescript @types/express @types/node @types/cors @types/body-parser
 
 npx tsc --init
+
+npm i ollama
 
 ## Frontend creation
 npx create-react-app client --template typescript
