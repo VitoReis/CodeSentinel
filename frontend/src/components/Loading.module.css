@@ -18,7 +18,7 @@
 .Ear {
   position: relative;
   top: 10%;
-  width: 7.5rem;
+  width: 7rem;
   height: 2rem;
   background: linear-gradient(to bottom, #202020, #000000);
   border-radius: 10%;
@@ -29,9 +29,9 @@
 .Neck {
   position: relative;
   top: 30%;
-  width: 2.5rem;
+  width: 2rem;
   height: 2.5rem;
-  background: linear-gradient(to bottom right, #202020, #000000);
+  background: linear-gradient(to right, #0f0f0f, #484848, #090909, #000000);
 }
 
 .Head {
@@ -40,7 +40,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 6rem;
+  width: 5.5rem;
   height: 7rem;
   border-radius: 40% 40% 50% 50%;
   background: radial-gradient(

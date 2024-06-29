@@ -4,10 +4,7 @@ const configureSentinelModel = async (model: string) => {
   const fs = require("fs").promises;
   try {
     console.log(`Generating embeds for ${model}...`);
-    const data = await fs.readFile(
-      "./src/embeddings/vulnerabilities.json",
-      "utf8"
-    );
+    const data = await fs.readFile("./src/embeddings/cwec_v4.14.xml", "utf8");
 
     const response = await axios.post("http://localhost:11434/api/embeddings", {
       model: model,
@@ -26,7 +23,8 @@ const configureSentinelModel = async (model: string) => {
     console.log(`Creating modelfile for ${model}...`);
     const modelfile = `
       FROM ${model}
-      SYSTEM Você é um verificador de vulnerabilidade em códigos, sempre responda em português do Brasil, e sempre nos seguintes em tópicos 'Descrição', 'Severidade' e 'Como solucionar o problema'
+      SYSTEM Você é um verificador de vulnerabilidade em códigos, sempre responda em português do Brasil. Responda nos seguintes tópicos 'Descrição', 'Severidade' e 'Como solucionar o problema'. Responda de forma simples, clara e direta. Caso receba um código sem vulnerabilidades apenas responda que não há vulnerabilidades no código. Caso receba qualquer outra entrada que não seja um código apenas responda que isso não se trata de um código.
+      PARAMETER temperature 0.4
       `;
     const response = await axios.post("http://localhost:11434/api/create", {
       model: model,
