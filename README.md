@@ -1,27 +1,45 @@
-# CodeSentinel
-## IA
-Ollama mistral
+# Code Sentinel
 
-## Backend creation
-npm init -y
+Este projeto é um verificador de vulnerabilidades em código, utilizando três modelos distintos do Ollama. Você pode escolher qualquer um dos modelos disponíveis e enviar seu código para análise. O sistema irá avaliar o código, identificar possíveis vulnerabilidades, classificar a severidade dessas vulnerabilidades e fornecer orientações detalhadas sobre como corrigi-las.
 
-npm install express cors body-parser axios
+## IA / MODELS
 
-npm install -D typescript @types/express @types/node @types/cors @types/body-parser
+Ollama:
 
-npx tsc --init
+- Codellama;
+- Llama3
+- Mistral
 
-npm i ollama
+## CRIAÇÃO DO BACKEND
 
-## Frontend creation
-npx create-react-app client --template typescript
+`npm init -y`
 
-npm install axios
+`npm install express cors body-parser axios`
 
-## Run project
-backend:
-npx ts-node server.ts
+`npm install -D typescript @types/express @types/node @types/cors @types/body-parser`
 
-frontend:
-npm start
+`npx tsc --init`
 
+## CRIAÇÃO DO FRONTEND
+
+`npx create-react-app client --template typescript`
+
+`npm install axios`
+
+## COMO RODAR O PROJETO
+
+#### BACKEND:
+
+Abra o terminal na pasta do backend e digite os seguintes códigos:
+
+`npm install`
+
+`npx ts-node server.ts`
+
+#### FRONTEND:
+
+Abra o terminal na pasta do frontend e digite os seguintes códigos:
+
+`npm install`
+
+`npm start`
