@@ -1,115 +1,130 @@
 .Robot {
-    transform: translate(0, -1000%);
-    display: flex;
-    flex-direction: line;
-    align-items: center;
-    justify-content: center;
-}
-
-.Head {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 6rem;
-    height: 7rem;
-    border-radius: 40% 40% 50% 50%;
-    background: radial-gradient(circle at 50% 20%, #ffffff 0%, #d0d0d0 80%, #b1b1b1 100%);
-    padding: 0.25rem;
-    overflow: hidden;
-}
-
-.Forehead {
-    display: flex;
-    flex-direction: line;
-}
-
-.Dots {
-    width: 0.2rem;
-    height: 0.2rem;
-    border-radius: 100%;
-    background: #ee0a0ae1;
-    margin: 0.15rem;
-}
-
-.Lines {
-    width: 0.25rem;
-    height: 1.5rem;
-    border-radius: 25%;
-    background: #ee0a0ae1;
-    margin-top: 0.25rem;
-}
-
-.Eyes {
-    display: flex;
-    flex-direction: line;
-}
-
-.Eye {
-    width: 2rem;
-    height: 2rem;
-    background: #000000;  
-    border-radius: 100%;
-    overflow: hidden;
-    margin: 0.25rem;
-    border: 4px solid #404040;
-}
-
-.Iris {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    width: 40%;
-    height: 40%;
-    background: radial-gradient(#000000, #101010);
-    border-radius: 50%;
-    border: 0.25rem double #ee0a0ae1;
-    box-shadow: 0.5rem 0.5rem 1rem #880b0be1;
-    animation: look 3s infinite;
-}
-
-@keyframes look {
-    0%, 100% {
-        transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
-    }
-    16% {
-        transform: translate(-50%, -10%) rotateX(30deg) rotateY(0deg);
-    }
-    32% {
-        transform: translate(-90%, -50%) rotateX(0deg) rotateY(30deg);
-    }
-    64% {
-        transform: translate(-50%, -10%) rotateX(30deg) rotateY(0deg);
-    }
-    76% {
-        transform: translate(-10%, -50%) rotateX(0deg) rotateY(-30deg);
-    }
+  position: fixed;
+  top: 40%;
+  right: 50%;
+  transform: translate(50%, 0);
+  width: 10rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid #000000;
+  border-radius: 100%;
+  background: linear-gradient(to bottom right, #d65d80, #b8000d);
+  overflow: hidden;
 }
 
 .Ear {
-    width: 7.5rem;
-    height: 2rem;
-    background: linear-gradient(to bottom, #202020, #000000);
-    border-radius: 10%;
-    margin-top: 0.15rem;
-    margin-bottom: 0.15rem;
-}
-
-.Mouth {
-    position: absolute;
-    top: 85%;
-    width: 2rem;
-    height: 2rem;
-    background: transparent;
-    border-radius: 100%;
-    border: 0.10rem solid #202020;
+  position: relative;
+  top: 10%;
+  width: 7.5rem;
+  height: 2rem;
+  background: linear-gradient(to bottom, #202020, #000000);
+  border-radius: 10%;
+  margin-top: 0.15rem;
+  margin-bottom: 0.15rem;
 }
 
 .Neck {
-    position: absolute;
-    top: 100%;
-    width: 2.5rem;
-    height: 4rem;
-    background: linear-gradient(to bottom right, #202020, #000000);
+  position: relative;
+  top: 30%;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(to bottom right, #202020, #000000);
+}
+
+.Head {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 6rem;
+  height: 7rem;
+  border-radius: 40% 40% 50% 50%;
+  background: radial-gradient(
+    circle at 25% 0%,
+    #ffffff 0%,
+    #c6c6c6 60%,
+    #8e8e8e 80%,
+    #3f3f3f 90%
+  );
+  padding: 0.25rem;
+  overflow: hidden;
+}
+
+.Forehead {
+  display: flex;
+  flex-direction: line;
+}
+
+.Dots {
+  width: 0.2rem;
+  height: 0.2rem;
+  border-radius: 100%;
+  background: #ee0a0ae1;
+  margin: 0.15rem;
+}
+
+.Lines {
+  width: 0.25rem;
+  height: 1.5rem;
+  border-radius: 25%;
+  background: #ee0a0ae1;
+  margin-top: 0.25rem;
+}
+
+.Eyes {
+  display: flex;
+  flex-direction: line;
+}
+
+.Eye {
+  width: 2rem;
+  height: 2rem;
+  background: #000000;
+  border-radius: 100%;
+  overflow: hidden;
+  margin: 0.25rem;
+  border: 4px solid #404040;
+}
+
+.Iris {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(#000000, #101010);
+  border-radius: 50%;
+  border: 0.25rem double #ee0a0ae1;
+  box-shadow: 0.5rem 0.5rem 1rem #880b0be1;
+  animation: look 1.5s infinite;
+}
+
+@keyframes look {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: translate(-90%, -20%) rotateX(25deg) rotateY(30deg);
+  }
+  50% {
+    transform: translate(-50%, -10%) rotateX(30deg) rotateY(0deg);
+  }
+  75% {
+    transform: translate(-10%, -20%) rotateX(25deg) rotateY(-30deg);
+  }
+}
+
+.Mouth {
+  position: absolute;
+  top: 85%;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border-radius: 100%;
+  border: 0.1rem solid #202020;
 }

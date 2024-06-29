@@ -1,27 +1,28 @@
 .Header {
-    display: flex;
-    flex-direction: line;
-    align-items: center;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    background: linear-gradient(to right, #282828, #202020);
-    color: #ee0a0ae1;
-    height: 4rem;
-    justify-content: left;
-    align-items: center;
+  display: flex;
+  flex-direction: line;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: linear-gradient(to right, #282828, #202020);
+  color: #ee0a0ae1;
+  height: 4rem;
+  justify-content: left;
+  align-items: center;
+  overflow: hidden;
 }
 
-.Header .Title {
-    margin-top: 1rem;
-    color: transparent;
-    font-style: italic;
-    font-size: 40px;
-    -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: #ee0a0ae1;
+.Title {
+  margin-top: 1rem;
+  color: transparent;
+  font-style: italic;
+  font-size: 40px;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #ee0a0ae1;
 }
 
-.Header .Images {
-    width: 3.5rem;
-    border-radius: 100%;
-    margin-right: 1rem;
+.Images {
+  width: 3.5rem;
+  border-radius: 100%;
+  margin-right: 1rem;
 }

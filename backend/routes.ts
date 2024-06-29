@@ -1,7 +1,7 @@
-const express = require("express")
-const router = express.Router()
-const ServerController = require("./src/controllers/serverController")
+import { analise } from "./src/controllers/serverController";
+const express = require("express");
+const router = express.Router();
 
-router.post("/api/send-code", ServerController.analise);
+router.post("/api/send-code", analise);
 
-module.exports = router
+module.exports = router;
