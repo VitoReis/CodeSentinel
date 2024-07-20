@@ -1,5 +1,5 @@
 import styles from "./Header.module.css";
-import codeSentinel from "../images/codeSentinel.jpg";
+import codeSentinel from "../../assets/codeSentinel.jpg";
 
 export default function Header(): JSX.Element {
   return (

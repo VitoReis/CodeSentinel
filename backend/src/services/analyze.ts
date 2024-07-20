@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
 import axios from "axios";
+import { Request, Response } from "express";
 
-export async function analise(req: Request, res: Response) {
+export async function analyze(req: Request, res: Response) {
   const { model, code } = req.body;
 
   try {

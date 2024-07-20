@@ -1,12 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import { configure } from "./services/configure";
 
 const app = express();
 const port: number = 5000;
-const router = require("./routes");
+const router = require("./routes/routes");
 const models = ["codellama", "llama3", "mistral"];
-const configureSentinelModel = require("./src/controllers/modelController");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,7 +16,7 @@ const startServer = async () => {
   try {
     const configurations = models.map(async (model): Promise<boolean> => {
       try {
-        const response: boolean = await configureSentinelModel(model);
+        const response = await configure(model);
         if (!response) {
           console.log(`Unable to configurate ${model} model`);
         }

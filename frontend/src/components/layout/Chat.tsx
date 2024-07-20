@@ -1,10 +1,10 @@
-import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { PiBroom } from "react-icons/pi";
 import { VscDebug } from "react-icons/vsc";
 import { GiBrain } from "react-icons/gi";
 import styles from "./Chat.module.css";
 import Loading from "./Loading";
+import { sendCode } from "../../services/communication";
 
 export default function Chat(): JSX.Element {
   const [code, setCode] = useState<string>("");
@@ -41,14 +41,11 @@ export default function Chat(): JSX.Element {
     }
   }, [loading]);
 
-  async function sendCode(): Promise<void> {
+  async function handleSend(): Promise<void> {
     if (code !== "") {
       try {
         setLoading(true);
-        const res = await axios.post("http://localhost:5000/api/send-code", {
-          model,
-          code,
-        });
+        const res = await sendCode(model, code);
         setResponse(res.data.response);
         setIsVisible(true);
         setLoading(false);
@@ -89,7 +86,11 @@ export default function Chat(): JSX.Element {
                 <option value="mistral">Mistral</option>
               </select>
             </div>
-            <button className={styles.Buttons} ref={sendRef} onClick={sendCode}>
+            <button
+              className={styles.Buttons}
+              ref={sendRef}
+              onClick={handleSend}
+            >
               <VscDebug size={25} />
             </button>
             <button
