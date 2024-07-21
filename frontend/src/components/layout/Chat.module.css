@@ -1,65 +1,35 @@
 .Chat {
   display: flex;
   flex-direction: line;
+  justify-content: space-around;
   padding-left: 5rem;
   padding-right: 5rem;
-  justify-content: center;
+  gap: 1rem;
+  overflow: hidden;
+  @media (max-width: 1080px) {
+    flex-direction: column;
+    padding-bottom: 2rem;
+  }
 }
 
 .UserArea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .Title {
   margin-top: 1rem;
   color: transparent;
   font-style: italic;
-  font-size: 35px;
+  font-size: 2rem;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: #ee0a0ae1;
-}
-
-.UserEntry {
-  width: 30rem;
-  height: 25rem;
-  font-size: 20px;
-  margin: 1rem;
-  padding: 0.5rem;
-  background-color: #3a3a3a;
-  border: 0px;
-  border-radius: 10px;
-  resize: none;
-  color: #ffffff;
-}
-
-.UserEntry:focus {
-  outline: 2px solid #ee0a0ae1;
-}
-
-.ResponseArea {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.ResponseText {
-  width: 30rem;
-  height: 25rem;
-  font-size: 20px;
-  margin: 1rem;
-  padding: 0.5rem;
-  color: #ffffff;
-  border: 2px solid #ee0a0ae1;
-  border-radius: 10px;
-  text-align: justify;
-  max-width: 100%;
-  max-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  white-space: pre-wrap;
+  white-space: nowrap;
+  @media (max-width: 1080px) {
+    font-size: 1.5rem;
+  }
 }
 
 .ButtonsArea {
@@ -67,80 +37,6 @@
   flex-direction: line;
   justify-content: center;
   align-self: center;
-}
-
-.Buttons {
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  border: 2px solid #ee0a0ae1;
-  border-radius: 100%;
-  background-color: #101010;
-  margin: 0.5rem;
-  color: #ee0a0ae1;
-  transition: 0.3s;
-}
-
-.Buttons:disabled {
-  color: #404040;
-  border: 2px solid #404040;
-}
-
-.Buttons:hover {
-  color: #ffffff;
-  background-color: #ee0a0ae1;
-  cursor: pointer;
-}
-
-.Buttons:disabled:hover {
-  color: #404040;
-  background-color: #101010;
-  cursor: default;
-}
-
-.ModelArea {
-  display: flex;
-  flex-direction: line;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ee0a0ae1;
-  border-radius: 10px;
-  padding: 0.2rem;
-  height: 2.5rem;
-  margin: 0.5rem;
-}
-
-.ModelSelector {
-  width: 7rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 15px;
-  border: 0px solid #ee0a0ae1;
-  border-radius: 10px;
-  background-color: #101010;
-  color: #ee0a0ae1;
-  transition: 0.3s;
-}
-
-.ModelSelector:disabled {
-  color: #404040;
-  border: 2px solid #404040;
-}
-
-.ModelSelector:hover {
-  cursor: pointer;
-}
-
-.ModelSelector:disabled:hover {
-  color: #404040;
-  background-color: #101010;
-  cursor: default;
 }
 
 .Unfocused {

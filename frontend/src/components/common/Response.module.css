@@ -1,0 +1,41 @@
+.Title {
+  margin-top: 1rem;
+  color: transparent;
+  font-style: italic;
+  font-size: 2rem;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #ee0a0ae1;
+  white-space: nowrap;
+  @media (max-width: 1080px) {
+    font-size: 1.5rem;
+  }
+}
+
+.ResponseArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ResponseText {
+  width: 30rem;
+  height: 25rem;
+  font-size: 1.5rem;
+  margin: 1rem;
+  padding: 0.5rem;
+  color: #ffffff;
+  border: 2px solid #ee0a0ae1;
+  border-radius: 10px;
+  text-align: justify;
+  min-width: 15rem;
+  max-width: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  scrollbar-width: thin;
+  scrollbar-color: #ee0a0ae1 transparent;
+  @media (max-width: 1080px) {
+    font-size: 1rem;
+  }
+}

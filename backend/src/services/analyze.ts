@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Request, Response } from "express";
 
-export async function analyze(req: Request, res: Response) {
+export async function analyze(req: Request, res: Response): Promise<void> {
   const { model, code } = req.body;
 
   try {
@@ -11,7 +11,7 @@ export async function analyze(req: Request, res: Response) {
       stream: false,
     });
 
-    res.json({ response: result.data.response });
+    res.json({ reply: result.data.response });
   } catch (error) {
     res.status(500).send(`Error processing code ${error}`);
   }

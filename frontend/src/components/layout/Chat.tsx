@@ -2,9 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { PiBroom } from "react-icons/pi";
 import { VscDebug } from "react-icons/vsc";
 import { GiBrain } from "react-icons/gi";
+import { sendCode } from "../../services/Communication";
 import styles from "./Chat.module.css";
 import Loading from "./Loading";
-import { sendCode } from "../../services/communication";
+import Response from "../common/Response";
+import Button from "../common/Button";
+import ModelSelector from "../common/ModelSelector";
+import UserInput from "../common/UserInput";
 
 export default function Chat(): JSX.Element {
   const [code, setCode] = useState<string>("");
@@ -45,8 +49,8 @@ export default function Chat(): JSX.Element {
     if (code !== "") {
       try {
         setLoading(true);
-        const res = await sendCode(model, code);
-        setResponse(res.data.response);
+        const reply = await sendCode(model, code);
+        setResponse(reply);
         setIsVisible(true);
         setLoading(false);
       } catch (error) {
@@ -62,52 +66,27 @@ export default function Chat(): JSX.Element {
       <div className={styles.Chat} ref={chatRef}>
         <div className={styles.UserArea}>
           <h1 className={styles.Title}>Insira seu código abaixo</h1>
-          <textarea
-            className={styles.UserEntry}
-            ref={textRef}
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            placeholder={
-              "#include<stdio.h>\n\nvoid main() {\n  printf('Insira seu código aqui');\n}"
-            }
-            rows={1}
-            cols={1}
+          <UserInput
+            reference={textRef}
+            code={code}
+            action={(e) => setCode(e.target.value)}
           />
           <div className={styles.ButtonsArea}>
-            <div className={styles.ModelArea}>
+            <ModelSelector
+              reference={modelRef}
+              action={(e) => setModel(e.target.value)}
+            >
               <GiBrain size={25} />
-              <select
-                ref={modelRef}
-                className={styles.ModelSelector}
-                onChange={(e) => setModel(e.target.value)}
-              >
-                <option value="codellama">Codellama</option>
-                <option value="llama3">Llama3</option>
-                <option value="mistral">Mistral</option>
-              </select>
-            </div>
-            <button
-              className={styles.Buttons}
-              ref={sendRef}
-              onClick={handleSend}
-            >
+            </ModelSelector>
+            <Button reference={sendRef} action={handleSend}>
               <VscDebug size={25} />
-            </button>
-            <button
-              className={styles.Buttons}
-              ref={clearRef}
-              onClick={() => setCode("")}
-            >
+            </Button>
+            <Button reference={clearRef} action={() => setCode("")}>
               <PiBroom size={25} />
-            </button>
+            </Button>
           </div>
         </div>
-        {isVisible && (
-          <div className={styles.ResponseArea}>
-            <h1 className={styles.Title}>Resultado da análise</h1>
-            <pre className={styles.ResponseText}>{response}</pre>
-          </div>
-        )}
+        {isVisible && <Response reply={response} />}
       </div>
       {loading && <Loading />}
     </>
