@@ -2,30 +2,44 @@ import { useState, useEffect, useRef } from "react";
 import { PiBroom } from "react-icons/pi";
 import { VscDebug } from "react-icons/vsc";
 import { GiBrain } from "react-icons/gi";
-import { sendCode } from "../../services/Communication";
+import { IoLanguage } from "react-icons/io5";
 import styles from "./Chat.module.css";
 import Loading from "./Loading";
 import Response from "../common/Response";
 import Button from "../common/Button";
-import ModelSelector from "../common/ModelSelector";
+import Selector from "../common/Selector";
 import UserInput from "../common/UserInput";
+import {
+  availableModels,
+  availableLanguages,
+  sendCode,
+} from "../../services/Communications";
 
 export default function Chat(): JSX.Element {
   const [code, setCode] = useState<string>("");
   const [model, setModel] = useState<string>("");
+  const [modelList, setModelList] = useState<string[]>([]);
+  const [language, setLanguage] = useState<string>("");
+  const [langList, setLangList] = useState<string[]>([]);
   const [response, setResponse] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const modelRef = useRef<HTMLSelectElement>(null);
+  const languageRef = useRef<HTMLSelectElement>(null);
   const sendRef = useRef<HTMLButtonElement>(null);
   const clearRef = useRef<HTMLButtonElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    getAvailableLanguages();
+    getAvailableModels();
     if (modelRef.current) {
       setModel(modelRef.current.value);
+    }
+    if (languageRef.current) {
+      setLanguage(languageRef.current.value);
     }
   }, []);
 
@@ -45,11 +59,29 @@ export default function Chat(): JSX.Element {
     }
   }, [loading]);
 
+  async function getAvailableModels() {
+    try {
+      const list = await availableModels();
+      setModelList(list);
+    } catch (error) {
+      console.error("Failed to fetch model list:", error);
+    }
+  }
+
+  async function getAvailableLanguages() {
+    try {
+      const list = await availableLanguages();
+      setLangList(list);
+    } catch (error) {
+      console.error("Failed to fetch model list:", error);
+    }
+  }
+
   async function handleSend(): Promise<void> {
     if (code !== "") {
       try {
         setLoading(true);
-        const reply = await sendCode(model, code);
+        const reply = await sendCode(model, code, language);
         setResponse(reply);
         setIsVisible(true);
         setLoading(false);
@@ -72,18 +104,28 @@ export default function Chat(): JSX.Element {
             action={(e) => setCode(e.target.value)}
           />
           <div className={styles.ButtonsArea}>
-            <ModelSelector
+            <Selector
               reference={modelRef}
               action={(e) => setModel(e.target.value)}
+              list={modelList}
             >
               <GiBrain size={25} />
-            </ModelSelector>
-            <Button reference={sendRef} action={handleSend}>
-              <VscDebug size={25} />
-            </Button>
-            <Button reference={clearRef} action={() => setCode("")}>
-              <PiBroom size={25} />
-            </Button>
+            </Selector>
+            <Selector
+              reference={languageRef}
+              action={(e) => setLanguage(e.target.value)}
+              list={langList}
+            >
+              <IoLanguage size={25} />
+            </Selector>
+            <div className={styles.ActionButtons}>
+              <Button reference={sendRef} action={handleSend}>
+                <VscDebug size={25} />
+              </Button>
+              <Button reference={clearRef} action={() => setCode("")}>
+                <PiBroom size={25} />
+              </Button>
+            </div>
           </div>
         </div>
         {isVisible && <Response reply={response} />}

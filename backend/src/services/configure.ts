@@ -1,10 +1,62 @@
 import axios from "axios";
 
-export async function configure(model: string) {
-  const fs = require("fs").promises;
+const fs = require("fs").promises;
+let models: string[];
+
+export async function create(model: string): Promise<boolean> {
   try {
-    console.log(`Generating embeds for ${model}...`);
-    const data = await fs.readFile("./data/cwec_v4.14.xml", "utf8");
+    const modelfile: string = (
+      await fs.readFile("./data/Modelfile", "utf8")
+    ).replace("{MODEL}", model);
+
+    const response = await axios.post("http://localhost:11434/api/create", {
+      model: model,
+      modelfile: modelfile,
+      stream: false,
+    });
+    if (response.status == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export async function running(): Promise<string[]> {
+  try {
+    const response = await axios.get("http://localhost:11434/api/tags");
+    models = response.data.models.map(
+      (model: { name: string }) => model.name.split(":")[0]
+    );
+    return models;
+  } catch (error) {
+    console.log(error);
+    return models;
+  }
+}
+
+function extractText(node: Node): string {
+  let texts: string[] = [];
+
+  function traverse(node: Node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      texts.push(node.nodeValue?.trim() || "");
+    }
+    for (let i = 0; i < node.childNodes.length; i++) {
+      traverse(node.childNodes[i]);
+    }
+  }
+
+  traverse(node);
+  return texts.join(" ").replace(/\s+/g, " ").trim();
+}
+
+export async function embed(model: string): Promise<boolean> {
+  try {
+    const data = await fs.readFile("./data/cwec_v4.15.txt", "utf8");
 
     const response = await axios.post("http://localhost:11434/api/embeddings", {
       model: model,
@@ -12,36 +64,13 @@ export async function configure(model: string) {
     });
 
     if (response.status === 200) {
-      console.log(`Successfully generated embeds for ${model}`);
-    } else {
-      console.log(`Error generating embeds for ${model}:`, response.data);
-      return false;
-    }
-  } catch (error) {
-    console.log(`Error generating embeds for ${model}`, error);
-    return false;
-  }
-  try {
-    console.log(`Creating modelfile for ${model}...`);
-    const modelfile = `
-      FROM ${model}
-      SYSTEM Você é um verificador de vulnerabilidade em códigos, sempre responda em português do Brasil. Responda nos seguintes tópicos Descrição, Severidade e Como solucionar o problema. Responda de forma simples, clara, direta e resumida. Caso receba um código sem vulnerabilidades apenas responda que não há vulnerabilidades no código. Caso receba algo que não seja um código apenas responda que não se trata de um código.
-      PARAMETER temperature 0.4
-      `;
-    const response = await axios.post("http://localhost:11434/api/create", {
-      model: model,
-      modelfile: modelfile,
-      stream: false,
-    });
-    if (response.status == 200) {
-      console.log(`Modelfile successfully created for ${model}`);
       return true;
     } else {
-      console.log(`Error creating modelfile for ${model}:`, response.data);
+      console.log(response.data);
       return false;
     }
   } catch (error) {
-    console.log(`Error creating modelfile for ${model}:`, error);
+    console.log(error);
     return false;
   }
 }

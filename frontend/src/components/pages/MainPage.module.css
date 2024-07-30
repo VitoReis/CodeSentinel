@@ -1,0 +1,6 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}

@@ -37,6 +37,16 @@
   flex-direction: line;
   justify-content: center;
   align-self: center;
+  @media (max-width: 1080px) {
+    flex-direction: column;
+  }
+}
+
+.ActionButtons {
+  display: flex;
+  flex-direction: line;
+  justify-content: center;
+  align-self: center;
 }
 
 .Unfocused {
