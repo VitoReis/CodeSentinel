@@ -46,12 +46,14 @@ export default function Chat(): JSX.Element {
   useEffect(() => {
     if (loading) {
       modelRef.current!.disabled = true;
+      languageRef.current!.disabled = true;
       sendRef.current!.disabled = true;
       clearRef.current!.disabled = true;
       textRef.current!.disabled = true;
       chatRef.current!.classList.add(`${styles.Unfocused}`);
     } else {
       modelRef.current!.disabled = false;
+      languageRef.current!.disabled = false;
       sendRef.current!.disabled = false;
       clearRef.current!.disabled = false;
       textRef.current!.disabled = false;
