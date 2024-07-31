@@ -1,17 +1,38 @@
 import axios from "axios";
+import { languages } from "../data/availables";
 
 const fs = require("fs").promises;
 let models: string[];
 
-export async function create(model: string): Promise<boolean> {
+export async function create(
+  model: string,
+  baseModel: string
+): Promise<boolean> {
   try {
     const modelfile: string = (
       await fs.readFile("./data/Modelfile", "utf8")
-    ).replace("{MODEL}", model);
+    ).replace("{MODEL}", baseModel);
 
     const response = await axios.post("http://localhost:11434/api/create", {
       model: model,
       modelfile: modelfile,
+      stream: false,
+    });
+    if (response.status == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export async function deleteModel(model: string): Promise<boolean> {
+  try {
+    const response = await axios.post("http://localhost:11434/api/delete", {
+      name: model,
       stream: false,
     });
     if (response.status == 200) {
@@ -38,22 +59,6 @@ export async function running(): Promise<string[]> {
   }
 }
 
-function extractText(node: Node): string {
-  let texts: string[] = [];
-
-  function traverse(node: Node) {
-    if (node.nodeType === Node.TEXT_NODE) {
-      texts.push(node.nodeValue?.trim() || "");
-    }
-    for (let i = 0; i < node.childNodes.length; i++) {
-      traverse(node.childNodes[i]);
-    }
-  }
-
-  traverse(node);
-  return texts.join(" ").replace(/\s+/g, " ").trim();
-}
-
 export async function embed(model: string): Promise<boolean> {
   try {
     const data = await fs.readFile("./data/cwec_v4.15.txt", "utf8");
@@ -71,6 +76,25 @@ export async function embed(model: string): Promise<boolean> {
     }
   } catch (error) {
     console.log(error);
+    return false;
+  }
+}
+
+export function addLanguage(language: string): boolean {
+  try {
+    languages.push(language);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+export function deleteLanguage(language: string): boolean {
+  try {
+    languages.filter((element) => element !== language);
+
+    return true;
+  } catch (error) {
     return false;
   }
 }

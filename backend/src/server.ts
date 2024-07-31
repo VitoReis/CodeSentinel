@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { embed, running } from "./services/configure";
+import menu from "./application/menu";
 
 interface EmbeddingResult {
   result: boolean;
@@ -25,9 +26,9 @@ async function embeddingModels(): Promise<EmbeddingResult> {
   const ERROR = `\x1b[31m` + `X` + `\x1b[0m`;
   let loading =
     `\n\n\n\n****************************` +
-    `\n\tSTATUS` +
+    `\n           STATUS` +
     `\n****************************` +
-    `\n\tMODEL\tEMBEDDINGS` +
+    `\n    MODEL     EMBEDDINGS` +
     `\n****************************` +
     `${models
       .map((model) => {
@@ -88,6 +89,7 @@ const startServer = async () => {
             `MODELS MISSING EMBEDDINS: \x1b[31m${embeds.missing}\x1b[0m\n` +
             `SERVER RUNNING ON: \x1b[34mhttp://localhost:${port}\x1b[0m\n`
         );
+        menu();
       });
     }
   } catch (error) {

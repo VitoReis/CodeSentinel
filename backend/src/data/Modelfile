@@ -1,9 +1,10 @@
 FROM {MODEL}
 
 PARAMETER temperature 0.4
+PARAMETER num_ctx 4096
 
 # Setting model behavior
-SYSTEM "You are an AI specialized in code analysis to find vulnerabilities. 
+SYSTEM """You are an AI specialized in code analysis to find vulnerabilities. 
 Your task is to:
 1. Examine the provided code.
 2. Identify potential security vulnerabilities.
@@ -29,20 +30,20 @@ If no vulnerabilities are found, respond only with 'No vulnerabilities were foun
 
 Always respond in the language specified by the LANGUAGE tag at the beginning of the provided code.
 Ensure that your responses are short and adapted to the indicated language to provide analysis and suggestions in the correct language.
-"
+"""
 
 # Template for the message structure
-TEMPLATE "{{ if .System }}system
+TEMPLATE """{{ if .System }}system
 {{ .System }}
 {{ end }}{{ if .Prompt }}user
 Provided code:
 {{ .Prompt }}
 {{ end }}assistant
 {{ .Response }}
-"
+"""
 
 # Example messages to train the model's behavior
-MESSAGE user "LANGUAGE: English
+MESSAGE user """LANGUAGE: English
 function login(username, password) {
     if (username == \"admin\" && password == \"password\") {
         console.log(\"Login successful\");
@@ -50,9 +51,9 @@ function login(username, password) {
         console.log(\"Login failed\");
     }
 }
-"
+"""
 
-MESSAGE assistant "Vulnerability 1: Use of hardcoded credentials (admin/password)
+MESSAGE assistant """Vulnerability 1: Use of hardcoded credentials (admin/password)
 Severity: High
 Correction suggestion: Do not use hardcoded credentials in the code. Instead, store them securely, such as in environment variables or use an authentication service.
 
@@ -101,10 +102,10 @@ function login(username, password) {
         console.log(\"Login failed\");
     }
 }
-"
+"""
 
 # Additional example to further train the model
-MESSAGE user "LANGUAGE: Português (Brasil)
+MESSAGE user """LANGUAGE: Português (Brasil)
 const express = require('express');
 const app = express();
 
@@ -117,9 +118,9 @@ app.get('/user/:id', (req, res) => {
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
 });
-"
+"""
 
-MESSAGE assistant "Vulnerabilidade 1: Injeção de parâmetro na URL
+MESSAGE assistant """Vulnerabilidade 1: Injeção de parâmetro na URL
 Descrição: Permite que um invasor injete comandos maliciosos através dos parâmetros da URL, podendo comprometer a segurança da aplicação.
 Gravidade: Alta
 Sugestão de correção: Validar e sanitizar os parâmetros da URL para evitar injeção de comandos maliciosos.
@@ -171,4 +172,4 @@ app.get('/user/:id', (req, res) => {
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
 });
-"
+"""
