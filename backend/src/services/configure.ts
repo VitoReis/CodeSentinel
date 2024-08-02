@@ -59,9 +59,9 @@ export async function running(): Promise<string[]> {
   }
 }
 
-export async function embed(model: string): Promise<boolean> {
+export async function embed(model: string, path: string): Promise<boolean> {
   try {
-    const data = await fs.readFile("./data/cwec_v4.15.txt", "utf8");
+    const data = await fs.readFile(`./data/${path}`, "utf8");
 
     const response = await axios.post("http://localhost:11434/api/embeddings", {
       model: model,
@@ -92,7 +92,6 @@ export function addLanguage(language: string): boolean {
 export function deleteLanguage(language: string): boolean {
   try {
     languages.filter((element) => element !== language);
-
     return true;
   } catch (error) {
     return false;

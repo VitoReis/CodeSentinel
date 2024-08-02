@@ -5,7 +5,7 @@ export async function sendCode(
   code: string,
   language: string
 ): Promise<string> {
-  const res = await axios.post("http://localhost:5000/api/send-code", {
+  const res = await axios.post("http://localhost:8000/api/send-code", {
     model,
     code,
     language,
@@ -17,7 +17,7 @@ export async function sendCode(
 }
 
 export async function availableModels(): Promise<string[]> {
-  const res = await axios.get("http://localhost:5000/api/availableModels");
+  const res = await axios.get("http://localhost:8000/api/availableModels");
 
   const models: string[] = res.data.models;
 
@@ -25,7 +25,7 @@ export async function availableModels(): Promise<string[]> {
 }
 
 export async function availableLanguages(): Promise<string[]> {
-  const res = await axios.get("http://localhost:5000/api/availableLanguages");
+  const res = await axios.get("http://localhost:8000/api/availableLanguages");
 
   const languages: string[] = res.data.languages;
 
