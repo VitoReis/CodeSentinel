@@ -10,10 +10,10 @@ import Button from "../common/Button";
 import Selector from "../common/Selector";
 import UserInput from "../common/UserInput";
 import {
-  availableModels,
+  groqAnalyze,
+  groqModels,
   availableLanguages,
-  sendCode,
-} from "../../services/Communications";
+} from "../../services/Communucations";
 
 export default function Chat(): JSX.Element {
   const [code, setCode] = useState<string>("");
@@ -69,7 +69,7 @@ export default function Chat(): JSX.Element {
 
   async function getAvailableModels() {
     try {
-      const list = await availableModels();
+      const list = await groqModels();
       setModelList(list);
     } catch (error) {
       console.error("Failed to fetch model list:", error);
@@ -89,7 +89,7 @@ export default function Chat(): JSX.Element {
     if (code !== "") {
       try {
         setLoading(true);
-        const reply = await sendCode(model, code, language);
+        const reply = await groqAnalyze(model, code, language);
         setResponse(reply);
         setIsVisible(true);
         setLoading(false);

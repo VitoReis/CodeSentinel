@@ -1,15 +1,9 @@
-import { groqCreate } from "../services/apiCalls";
-import {
-  availableModels,
-  availableLanguages,
-  analyze,
-} from "../services/users";
+import { groqAnalyze, groqModels, listLanguages } from "../services/groqCalls";
 const express = require("express");
 const router = express.Router();
 
-router.get("/api/availableModels", availableModels);
-router.get("/api/availablelanguages", availableLanguages);
-router.post("/api/send-code", analyze);
-router.post("/api/groqCreate", groqCreate);
+router.post("/api/analyze", groqAnalyze);
+router.get("/api/models", groqModels);
+router.get("/api/languages", listLanguages);
 
 module.exports = router;
