@@ -14,28 +14,27 @@ app.use(router);
 
 let models: string[];
 
-async function showMenu(server: any) {
-  const close: boolean = await menu();
-  if (close) {
-    server.close();
-  }
-}
-
-const startServer = async () => {
+const startServer = async (local: boolean) => {
   try {
-    models = await running();
-    Promise.all(models);
-
+    if (local) {
+      models = await running();
+      Promise.all(models);
+    } else {
+    }
     const server = app.listen(port, () => {
       console.log(
-        `\nMODELS RUNNING: \x1b[32m${models.length}\x1b[0m` +
+        `\nMODELS RUNNING LOCALLY: \x1b[32m${models.length}\x1b[0m` +
           `\nSERVER RUNNING ON: \x1b[34mhttp://localhost:${port}\x1b[0m\n`
       );
-      // showMenu(server);
     });
   } catch (error) {
     console.log("\nUNABLE TO START SERVER\n", error);
   }
 };
 
-startServer();
+async function presets() {
+  const local: boolean = await menu();
+  startServer(local);
+}
+
+presets();

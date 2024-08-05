@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Request, Response } from "express";
-import { languages } from "../data/availables";
+import { languages } from "../data/languages";
 
 export async function availableModels(req: Request, res: Response) {
   try {

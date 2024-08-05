@@ -1,5 +1,5 @@
 import axios from "axios";
-import { languages } from "../data/availables";
+import { languages } from "../data/languages";
 
 const fs = require("fs").promises;
 let models: string[];
@@ -91,7 +91,7 @@ export function addLanguage(language: string): boolean {
 
 export function deleteLanguage(language: string): boolean {
   try {
-    languages.filter((element) => element !== language);
+    languages.filter((element: string) => element !== language);
     return true;
   } catch (error) {
     return false;

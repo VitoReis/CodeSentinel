@@ -16,6 +16,10 @@ Ollama:
 
 `npm install express cors body-parser axios`
 
+`npm install dotenv`
+
+`npm install groq-sdk`
+
 `npm install -D typescript @types/express @types/node @types/cors @types/body-parser`
 
 `npx tsc --init`

@@ -33,14 +33,20 @@ export default function Chat(): JSX.Element {
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    getAvailableLanguages();
-    getAvailableModels();
-    if (modelRef.current) {
-      setModel(modelRef.current.value);
-    }
-    if (languageRef.current) {
-      setLanguage(languageRef.current.value);
-    }
+    const settingLanguage = async () => {
+      await getAvailableLanguages();
+      if (modelRef.current) {
+        setModel(modelRef.current.value);
+      }
+    };
+    const settingModels = async () => {
+      await getAvailableModels();
+      if (languageRef.current) {
+        setLanguage(languageRef.current.value);
+      }
+    };
+    settingLanguage();
+    settingModels();
   }, []);
 
   useEffect(() => {

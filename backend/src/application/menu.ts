@@ -17,17 +17,17 @@ const rl = readline.createInterface({
 
 const options =
   "\n" +
-  "************************\n" +
-  "*    SERVER OPTIONS    *\n" +
-  "************************\n" +
-  "* 1 - CREATE NEW MODEL *\n" +
-  "* 2 - EMBED MODEL      *\n" +
-  "* 3 - LIST MODELS      *\n" +
-  "* 4 - DELETE MODEL     *\n" +
-  "* 5 - ADD NEW LANGUAGE *\n" +
-  "* 6 - DELETE LANGUAGE  *\n" +
-  "* 0 - CLOSE SERVER     *\n" +
-  "************************\n" +
+  "******************************\n" +
+  "*        SERVER OPTIONS      *\n" +
+  "******************************\n" +
+  "* 1 - CREATE NEW MODEL       *\n" +
+  "* 2 - EMBED MODEL            *\n" +
+  "* 3 - LIST MODELS            *\n" +
+  "* 4 - DELETE MODEL           *\n" +
+  "* 5 - ADD NEW LANGUAGE       *\n" +
+  "* 6 - DELETE LANGUAGE        *\n" +
+  "* 0 - CLOSE AND START SERVER *\n" +
+  "******************************\n" +
   "ENTER YOUR CHOICE: ";
 
 function askQuestion(question: string): Promise<string> {
@@ -59,7 +59,7 @@ export async function menu(): Promise<boolean> {
         `WHAT IS THE NAME OF YOUR ${colors.fgGreen}NEW MODEL${colors.reset}? `
       );
       baseModel = await askQuestion(
-        `\nWHAT IS THE NAME OF YOUR ${colors.fgBlue}BASE MODEL${colors.reset}? `
+        `WHAT IS THE NAME OF YOUR ${colors.fgBlue}BASE MODEL${colors.reset}? `
       );
       response = await create(model, baseModel);
       if (response) {
@@ -90,8 +90,8 @@ export async function menu(): Promise<boolean> {
     case 3:
       models = await running();
       console.log(
-        `\n${colors.fgGreen}AVAILABLE MODELS${colors.reset}: ${models.map(
-          (model) => `${model} `
+        `\n${colors.fgGreen}AVAILABLE MODELS${colors.reset}:${models.map(
+          (model) => ` ${model}`
         )}`
       );
       break;
