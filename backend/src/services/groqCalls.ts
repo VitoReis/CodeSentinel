@@ -45,6 +45,31 @@ export async function groqModels(req: Request, res: Response) {
   }
 }
 
+export async function groqEmbed(model: string) {
+  // const { model } = req.body;
+  try {
+    const embed = (await fs.readFile("./data/vuln.txt", "utf-8")).split(
+      "---"
+    )[0];
+    const list = await groq.models.list();
+    const models: string[] = list.data
+      .map((model: { id: string }) => model.id)
+      .filter((id: string) => id !== "whisper-large-v3");
+    // console.log(embed);
+    models.map(async (model) => {
+      try {
+        const res = await groq.embeddings.create({
+          input: embed,
+          model: model,
+        });
+        console.log(res);
+      } catch (error) {
+        console.log(`${error}`);
+      }
+    });
+  } catch (error) {}
+}
+
 export async function listLanguages(req: Request, res: Response) {
   try {
     res.json({ languages });
@@ -52,3 +77,5 @@ export async function listLanguages(req: Request, res: Response) {
     res.status(500).send(`Error returning available languages\n${error}`);
   }
 }
+
+groqEmbed("llama-3.1-70b-versatile");
