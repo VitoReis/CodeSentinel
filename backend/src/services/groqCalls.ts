@@ -35,7 +35,11 @@ export async function groqAnalyze(req: Request, res: Response) {
 
 export async function groqModels(req: Request, res: Response) {
   try {
-    res.send(await groq.models.list());
+    const list = await groq.models.list();
+    const models: string[] = list.data
+      .map((model: { id: string }) => model.id)
+      .filter((id: string) => id !== "whisper-large-v3");
+    res.send(models);
   } catch (error) {
     res.status(500).send(`Error listing models\n${error}`);
   }

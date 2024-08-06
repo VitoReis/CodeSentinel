@@ -16,9 +16,7 @@ export async function groqAnalyze(
 
 export async function groqModels(): Promise<string[]> {
   const res = await axios.get("http://localhost:8000/api/models");
-  const models = res.data.data.map((model: { id: string }) => model.id);
-
-  return models;
+  return res.data;
 }
 
 export async function availableLanguages(): Promise<string[]> {
