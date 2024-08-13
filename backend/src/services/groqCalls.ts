@@ -48,14 +48,10 @@ export async function groqModels(req: Request, res: Response) {
 export async function groqEmbed(model: string) {
   // const { model } = req.body;
   try {
-    const embed = (await fs.readFile("./data/vuln.txt", "utf-8")).split(
-      "---"
-    )[0];
-    const list = await groq.models.list();
-    const models: string[] = list.data
+    const embed = await fs.readFile("./data/cwec_v4.15.txt", "utf-8");
+    const models: string[] = (await groq.models.list()).data
       .map((model: { id: string }) => model.id)
       .filter((id: string) => id !== "whisper-large-v3");
-    // console.log(embed);
     models.map(async (model) => {
       try {
         const res = await groq.embeddings.create({
