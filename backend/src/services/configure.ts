@@ -33,7 +33,6 @@ export async function deleteModel(model: string): Promise<boolean> {
   try {
     const response = await axios.post("http://localhost:11434/api/delete", {
       name: model,
-      stream: false,
     });
     if (response.status == 200) {
       return true;

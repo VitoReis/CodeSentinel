@@ -47,99 +47,97 @@ export async function menu(): Promise<boolean> {
   let models: string[];
   let model: string, baseModel: string, language: string, path: string;
   let response: boolean;
-
-  choice = parseInt(await askQuestion(options));
-  switch (choice) {
-    case 0:
-      console.log(`CLOSING...\n`);
-      rl.close();
-      break;
-    case 1:
-      model = await askQuestion(
-        `WHAT IS THE NAME OF YOUR ${colors.fgGreen}NEW MODEL${colors.reset}? `
-      );
-      baseModel = await askQuestion(
-        `WHAT IS THE NAME OF YOUR ${colors.fgBlue}BASE MODEL${colors.reset}? `
-      );
-      response = await create(model, baseModel);
-      if (response) {
-        console.log(`\nMODEL ${colors.fgGreen}CREATED${colors.reset}\n`);
-      } else {
-        console.log(
-          `\n${colors.fgBrightRed}UNABLE TO CREATE MODEL${colors.reset}\n`
+  do {
+    choice = parseInt(await askQuestion(options));
+    switch (choice) {
+      case 0:
+        console.log(`CLOSING...\n`);
+        rl.close();
+        break;
+      case 1:
+        model = await askQuestion(
+          `WHAT IS THE NAME OF YOUR ${colors.fgGreen}NEW MODEL${colors.reset}? `
         );
-      }
-      break;
-    case 2:
-      model = await askQuestion(
-        `FOR WHICH MODEL DO YOU WANT ${colors.fgGreen}GENERATE${colors.reset} ${colors.fgYellow}EMBEDS${colors.reset}? `
-      );
-      path = await askQuestion(
-        `WHAT IS THE NAME OF YOUR ${colors.fgYellow}EMBEDDINGS FILE${colors.reset} AND ${colors.fgMagenta}EXTENSION${colors.reset}? (EX: EMBED.TXT) `
-      );
-      console.log(`\nGENERATING EMBED...\n`);
-      response = await embed(model, path);
-      if (response) {
-        console.log(`\n${colors.fgGreen}MODEL EMBEDDED${colors.reset}\n`);
-      } else {
-        console.log(
-          `\n${colors.fgBrightRed}UNABLE TO GENERATE EMBED FOR MODEL${colors.reset}\n`
+        baseModel = await askQuestion(
+          `WHAT IS THE NAME OF YOUR ${colors.fgBlue}BASE MODEL${colors.reset}? `
         );
-      }
-      break;
-    case 3:
-      models = await running();
-      console.log(
-        `\n${colors.fgGreen}AVAILABLE MODELS${colors.reset}:${models.map(
-          (model) => ` ${model}`
-        )}`
-      );
-      break;
-    case 4:
-      model = await askQuestion(
-        `WHAT IS THE NAME OF THE MODEL YOU WANT TO ${colors.fgRed}DELETE${colors.reset}? `
-      );
-      response = await deleteModel(model);
-      if (response) {
-        console.log(`\nMODEL ${colors.fgRed}DELETED${colors.reset}\n`);
-      } else {
-        console.log(
-          `${colors.fgBrightRed}UNABLE TO DELETE MODEL${colors.reset}\n`
+        response = await create(model, baseModel);
+        if (response) {
+          console.log(`\nMODEL ${colors.fgGreen}CREATED${colors.reset}\n`);
+        } else {
+          console.log(
+            `\n${colors.fgBrightRed}UNABLE TO CREATE MODEL${colors.reset}\n`
+          );
+        }
+        break;
+      case 2:
+        model = await askQuestion(
+          `FOR WHICH MODEL DO YOU WANT ${colors.fgGreen}GENERATE${colors.reset} ${colors.fgYellow}EMBEDS${colors.reset}? `
         );
-      }
-      break;
-    case 5:
-      language = await askQuestion(
-        `WHICH ${colors.fgYellow}LANGUAGE${colors.reset} DO YOU WANNA ${colors.fgGreen}ADD${colors.reset}? `
-      );
-      response = addLanguage(language);
-      if (response) {
-        console.log(`\nLANGUAGE ${colors.fgGreen}ADDED${colors.reset}\n`);
-      } else {
-        console.log(
-          `${colors.fgBrightRed}UNABLE TO DELETE LANGUAGE${colors.reset}\n`
+        path = await askQuestion(
+          `WHAT IS THE NAME OF YOUR ${colors.fgYellow}EMBEDDINGS FILE${colors.reset} AND ${colors.fgMagenta}EXTENSION${colors.reset}? (EX: EMBED.TXT) `
         );
-      }
-      break;
-    case 6:
-      language = await askQuestion(
-        `WHICH ${colors.fgYellow}LANGUAGE${colors.reset} DO YOU WANNA ${colors.fgRed}DELETE${colors.reset}? `
-      );
-      response = deleteLanguage(language);
-      if (response) {
-        console.log(`\nLANGUAGE ${colors.fgRed}DELETED${colors.reset}\n`);
-      } else {
+        console.log(`\nGENERATING EMBED...\n`);
+        response = await embed(model, path);
+        if (response) {
+          console.log(`\n${colors.fgGreen}MODEL EMBEDDED${colors.reset}\n`);
+        } else {
+          console.log(
+            `\n${colors.fgBrightRed}UNABLE TO GENERATE EMBED FOR MODEL${colors.reset}\n`
+          );
+        }
+        break;
+      case 3:
+        models = await running();
         console.log(
-          `${colors.fgBrightRed}UNABLE TO DELETE LANGUAGE${colors.reset}\n`
+          `\n${colors.fgGreen}AVAILABLE MODELS${colors.reset}:${models.map(
+            (model) => ` ${model}`
+          )}`
         );
-      }
-      break;
-    default:
-      console.log(`${colors.fgYellow}OPTION UNAVAILABLE${colors.reset}\n`);
-      break;
-  }
-  if (choice != 0) {
-    menu();
-  }
+        break;
+      case 4:
+        model = await askQuestion(
+          `WHAT IS THE NAME OF THE MODEL YOU WANT TO ${colors.fgRed}DELETE${colors.reset}? `
+        );
+        response = await deleteModel(model);
+        if (response) {
+          console.log(`\nMODEL ${colors.fgRed}DELETED${colors.reset}\n`);
+        } else {
+          console.log(
+            `${colors.fgBrightRed}UNABLE TO DELETE MODEL${colors.reset}\n`
+          );
+        }
+        break;
+      case 5:
+        language = await askQuestion(
+          `WHICH ${colors.fgYellow}LANGUAGE${colors.reset} DO YOU WANNA ${colors.fgGreen}ADD${colors.reset}? `
+        );
+        response = addLanguage(language);
+        if (response) {
+          console.log(`\nLANGUAGE ${colors.fgGreen}ADDED${colors.reset}\n`);
+        } else {
+          console.log(
+            `${colors.fgBrightRed}UNABLE TO DELETE LANGUAGE${colors.reset}\n`
+          );
+        }
+        break;
+      case 6:
+        language = await askQuestion(
+          `WHICH ${colors.fgYellow}LANGUAGE${colors.reset} DO YOU WANNA ${colors.fgRed}DELETE${colors.reset}? `
+        );
+        response = deleteLanguage(language);
+        if (response) {
+          console.log(`\nLANGUAGE ${colors.fgRed}DELETED${colors.reset}\n`);
+        } else {
+          console.log(
+            `${colors.fgBrightRed}UNABLE TO DELETE LANGUAGE${colors.reset}\n`
+          );
+        }
+        break;
+      default:
+        console.log(`${colors.fgYellow}OPTION UNAVAILABLE${colors.reset}\n`);
+        break;
+    }
+  } while (choice !== 0);
   return true;
 }
