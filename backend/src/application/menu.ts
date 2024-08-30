@@ -42,7 +42,7 @@ function askQuestion(question: string): Promise<string> {
   });
 }
 
-export async function menu(): Promise<boolean> {
+export async function menu(): Promise<void> {
   let choice: number = -1;
   let models: string[];
   let model: string, baseModel: string, language: string, path: string;
@@ -139,5 +139,4 @@ export async function menu(): Promise<boolean> {
         break;
     }
   } while (choice !== 0);
-  return true;
 }

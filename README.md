@@ -64,3 +64,15 @@ Abra o terminal na pasta do frontend e digite os seguintes códigos:
 `npm install`
 
 `npm start`
+
+#### DOCKER:
+
+##### BACKEND:
+
+`docker build -t backend .`
+`docker run -it -p 8000:8000 backend`
+
+##### FRONTEND:
+
+`docker build -t frontend .`
+`docker run -p 80:80 backend`
