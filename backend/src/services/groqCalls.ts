@@ -45,25 +45,56 @@ export async function groqModels(req: Request, res: Response) {
   }
 }
 
-export async function groqEmbed(model: string) {
-  // const { model } = req.body;
+function splitTextIntoChunks(text: string, maxTokens: number) {
+  const tokens = text.split(/\s+/);
+
+  const chunks = [];
+  for (let i = 0; i < tokens.length; i += maxTokens) {
+    chunks.push(tokens.slice(i, i + maxTokens).join(" "));
+  }
+  return chunks;
+}
+
+export async function groqEmbed() {
   try {
     const embed = await fs.readFile("./data/cwec_v4.15.txt", "utf-8");
-    const models: string[] = (await groq.models.list()).data
+    const chunks = splitTextIntoChunks(embed, 2048);
+
+    const models = (await groq.models.list()).data
       .map((model: { id: string }) => model.id)
       .filter((id: string) => id !== "whisper-large-v3");
-    models.map(async (model) => {
+
+    for (const model of models) {
       try {
-        const res = await groq.embeddings.create({
-          input: embed,
-          model: model,
+        const responses = await Promise.all(
+          chunks.map(async (chunk) => {
+            try {
+              const response = await groq.embeddings.create({
+                input: chunk,
+                model: model,
+              });
+              return "Embedded";
+            } catch (error) {
+              // console.error(
+              //   `Error creating embeddings for model ${model}:`,
+              //   error
+              // );
+              return "Not embedded";
+            }
+          })
+        );
+        console.log(`Model: ${model}`);
+        responses.forEach((response, index) => {
+          console.log(`Chunk ${index + 1}:`, response);
         });
-        console.log(res);
       } catch (error) {
-        console.log(`${error}`);
+        // console.error(`Error processing embeddings for model ${model}:`, error);
       }
-    });
-  } catch (error) {}
+    }
+  } catch (error) {
+    // console.error("Error creating embeddings:", error);
+    return null;
+  }
 }
 
 export async function listLanguages(req: Request, res: Response) {
@@ -73,5 +104,3 @@ export async function listLanguages(req: Request, res: Response) {
     res.status(500).send(`Error returning available languages\n${error}`);
   }
 }
-
-groqEmbed("llama-3.1-70b-versatile");
