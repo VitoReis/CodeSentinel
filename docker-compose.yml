@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    networks:
+      - codesentinel
+    ports:
+      - "8000:8000"
+    environment:
+      - SKIP_MENU=true
+
+  frontend:
+    build:
+      context: ./frontend
+    networks:
+      - codesentinel
+    ports:
+      - "3000:80"
+
+networks:
+  codesentinel:
+    driver: bridge

@@ -75,4 +75,9 @@ Abra o terminal na pasta do frontend e digite os seguintes códigos:
 ##### FRONTEND:
 
 `docker build -t frontend .`
-`docker run -p 80:80 backend`
+`docker run -p 3000:3000 backend`
+
+##### ALL:
+
+`docker network create codesentinel`
+`docker-compose up --build`

@@ -33,7 +33,9 @@ const startServer = async () => {
 };
 
 async function presets() {
-  await menu();
+  if (!process.env.SKIP_MENU) {
+    await menu();
+  }
   startServer();
 }
 
