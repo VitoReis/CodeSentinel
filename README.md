@@ -45,6 +45,8 @@ Groq Cloud (Remoto):
 
 `npx create-react-app client --template typescript`
 
+`npm install react-markdown`
+
 `npm install axios`
 
 ## COMO RODAR O PROJETO
