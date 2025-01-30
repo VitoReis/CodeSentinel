@@ -13,6 +13,16 @@
   border-radius: 100%;
   background: linear-gradient(to bottom right, #d65d80, #b8000d);
   overflow: hidden;
+  animation: blinkingShadow 0.5s infinite alternate;
+}
+
+@keyframes blinkingShadow {
+  0% {
+    box-shadow: 0 0 0 0 #ee0a0a;
+  }
+  100% {
+    box-shadow: 0 0 100px 30px #ee0a0a;
+  }
 }
 
 .Ear {
@@ -29,9 +39,20 @@
 .Neck {
   position: relative;
   top: 30%;
-  width: 2rem;
+  width: 2.3rem;
   height: 2.5rem;
   background: linear-gradient(to right, #0f0f0f, #484848, #090909, #000000);
+}
+
+.NeckDivision {
+  position: relative;
+  top: -20%;
+  left: 7%;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border-bottom: 2px solid #000000;
+  border-radius: 30%;
 }
 
 .Head {
@@ -63,7 +84,7 @@
   width: 0.2rem;
   height: 0.2rem;
   border-radius: 100%;
-  background: #ee0a0ae1;
+  background: #ee0a0a;
   margin: 0.15rem;
 }
 
@@ -71,7 +92,7 @@
   width: 0.25rem;
   height: 1.5rem;
   border-radius: 25%;
-  background: #ee0a0ae1;
+  background: #ee0a0a;
   margin-top: 0.25rem;
 }
 
@@ -98,7 +119,7 @@
   height: 40%;
   background: radial-gradient(#000000, #101010);
   border-radius: 50%;
-  border: 0.25rem double #ee0a0ae1;
+  border: 0.25rem double #ee0a0a;
   box-shadow: 0.5rem 0.5rem 1rem #880b0be1;
   animation: look 1.5s infinite;
 }

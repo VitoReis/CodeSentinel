@@ -13,7 +13,6 @@ app.use(router);
 
 const startServer = async () => {
   try {
-    await groqEmbed();
     app.listen(port, () => {
       console.log(
         `\nSERVER RUNNING ON: \x1b[34mhttp://localhost:${port}\x1b[0m\n`

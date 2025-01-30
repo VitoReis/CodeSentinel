@@ -4,6 +4,10 @@ Este projeto é um verificador de vulnerabilidades em código, utilizando três 
 
 Na branch groqCloud você pode rodar o mesmo projeto utilizando os modelos do [Groq Cloud](https://console.groq.com/login), basta criar o arquivo .env e adicionar sua **API KEY**.
 
+## Embeddings
+
+Os embeddings para os modelos são gerados pelo [fastembed-js](https://github.com/Anush008/fastembed-js)
+
 ## IA / MODELS
 
 Ollama (Local):
@@ -40,6 +44,10 @@ Groq Cloud (Remoto):
 `npm install -D typescript @types/express @types/node @types/cors @types/body-parser`
 
 `npx tsc --init`
+
+`npm install pdf-parse`
+
+`npm install fastembed`
 
 ## CRIAÇÃO DO FRONTEND
 

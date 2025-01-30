@@ -1,6 +1,8 @@
 import Groq from "groq-sdk";
 import { Request, Response } from "express";
 import { languages } from "../data/languages";
+import pdfParse from "pdf-parse";
+import { EmbeddingModel, FlagEmbedding } from "fastembed";
 
 require("dotenv").config();
 const fs = require("fs").promises;
@@ -8,26 +10,36 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 export async function groqAnalyze(req: Request, res: Response) {
   const { model, language, code } = req.body;
-  const sufix =
-    "You are an AI specialized in code analysis to find vulnerabilities. Your task is to: Examine the provided code. Identify potential security vulnerabilities. Assess the severity of each vulnerability (Low, Medium, High). Suggest detailed corrections, including code examples when appropriate. Answer in 4 major topics for each vulnerability found: Vulnerability, Description, Severity, Possible solution. Limitations: You must not provide code refactoring suggestions unrelated to security. You must not assess the code quality beyond security issues. You must focus solely on security vulnerabilities. You must answer in a short and direct way. Your goal is to help improve the security of the provided code. If no vulnerabilities are found, respond only with 'No vulnerabilities were found'. Respond in {LANGUAGE}. Ensure that your responses are short and adapted to the indicated language to provide analysis and suggestions in the correct language.".replace(
-      "{LANGUAGE}",
-      language
-    );
-  const message: string = sufix + "\n" + code;
+  const context = await groqEmbed();
+
+  const modelfile: string = (
+    await fs.readFile("./data/Modelfile", "utf8")
+  ).replace("{MODEL}", model);
+
+  const message: string =
+    "CONTEXT: \n" +
+    context +
+    "\n" +
+    modelfile +
+    "\nLANGUAGE: " +
+    language +
+    "\nCODE:\n" +
+    code;
+
   try {
-    res.json(
-      await groq.chat.completions.create({
-        messages: [
-          {
-            role: "user",
-            content: message,
-          },
-        ],
-        model: model,
-        temperature: 0.4,
-        stream: false,
-      })
-    );
+    const create = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: message,
+        },
+      ],
+      model: model,
+      temperature: 0.4,
+      stream: false,
+    });
+    const reply = create.choices[0].message.content!.replace("{VULN}", "\n\n");
+    res.json(reply);
   } catch (error) {
     res.status(500).send(`Error analyzing code\n${error}`);
   }
@@ -45,55 +57,30 @@ export async function groqModels(req: Request, res: Response) {
   }
 }
 
-function splitTextIntoChunks(text: string, maxTokens: number) {
-  const tokens = text.split(/\s+/);
-
-  const chunks = [];
-  for (let i = 0; i < tokens.length; i += maxTokens) {
-    chunks.push(tokens.slice(i, i + maxTokens).join(" "));
-  }
-  return chunks;
-}
-
 export async function groqEmbed() {
+  const embeddingModel = await FlagEmbedding.init({
+    model: EmbeddingModel.BGEBaseEN,
+  });
+
   try {
-    const embed = await fs.readFile("./data/cwec_v4.15.txt", "utf-8");
-    const chunks = splitTextIntoChunks(embed, 2048);
+    const pdfBuffer = await fs.readFile("./data/cwe_latest.pdf");
+    const pdfData = await pdfParse(pdfBuffer);
+    const embed = [pdfData.text];
 
-    const models = (await groq.models.list()).data
-      .map((model: { id: string }) => model.id)
-      .filter((id: string) => id !== "whisper-large-v3");
+    try {
+      const embeddings = embeddingModel.embed(embed, 2);
+      const allEmbeddings = [];
 
-    for (const model of models) {
-      try {
-        const responses = await Promise.all(
-          chunks.map(async (chunk) => {
-            try {
-              const response = await groq.embeddings.create({
-                input: chunk,
-                model: model,
-              });
-              return "Embedded";
-            } catch (error) {
-              // console.error(
-              //   `Error creating embeddings for model ${model}:`,
-              //   error
-              // );
-              return "Not embedded";
-            }
-          })
-        );
-        console.log(`Model: ${model}`);
-        responses.forEach((response, index) => {
-          console.log(`Chunk ${index + 1}:`, response);
-        });
-      } catch (error) {
-        // console.error(`Error processing embeddings for model ${model}:`, error);
+      for await (const batch of embeddings) {
+        allEmbeddings.push(batch);
       }
+      return allEmbeddings;
+    } catch (error) {
+      console.error(`Error creating embeddings for chunk:`, error);
+      return undefined;
     }
   } catch (error) {
-    // console.error("Error creating embeddings:", error);
-    return null;
+    console.error("Error processing PDF file:", error);
   }
 }
 

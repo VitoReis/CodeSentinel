@@ -4,7 +4,9 @@ export default function Loading(): JSX.Element {
   return (
     <div className={styles.Robot}>
       <div className={styles.Ear} />
-      <div className={styles.Neck} />
+      <div className={styles.Neck}>
+        <div className={styles.NeckDivision} />
+      </div>
       <div className={styles.Head}>
         <div className={styles.Forehead}>
           <div className={styles.Dots} />

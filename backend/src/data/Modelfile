@@ -29,7 +29,9 @@ function login(username, password) {
 """
 
 MESSAGE assistant """Vulnerability 1: Use of hardcoded credentials (admin/password)
+
 Severity: High
+
 Correction suggestion: Do not use hardcoded credentials in the code. Instead, store them securely, such as in environment variables or use an authentication service.
 
 Correction example:
@@ -47,9 +49,11 @@ function login(username, password) {
         console.log(\"Login failed\");
     }
 }
-
+{VULN}
 Vulnerability 2: Insecure string comparison
+
 Severity: Medium
+
 Correction suggestion: Use a secure string comparison function to prevent timing attacks, such as \`crypto.timingSafeEqual\` in Node.js.
 
 Correction example:
@@ -95,8 +99,11 @@ app.listen(3000, () => {
 """
 
 MESSAGE assistant """Vulnerabilidade 1: Injeção de parâmetro na URL
+
 Descrição: Permite que um invasor injete comandos maliciosos através dos parâmetros da URL, podendo comprometer a segurança da aplicação.
+
 Gravidade: Alta
+
 Sugestão de correção: Validar e sanitizar os parâmetros da URL para evitar injeção de comandos maliciosos.
 
 Exemplo de correção:
@@ -119,10 +126,13 @@ app.get('/user/:id', (req, res) => {
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
 });
-
+{VULN}
 Vulnerabilidade 2: Falta de proteção contra Cross-Site Scripting (XSS)
+
 Descrição: Permite que um invasor injete scripts maliciosos que podem ser executados no navegador da vítima, comprometendo a segurança do usuário.
+
 Gravidade: Alta
+
 Sugestão de correção: Usar uma biblioteca para escapar a saída de dados e evitar XSS.
 
 Exemplo de correção:
@@ -171,8 +181,11 @@ int main() {
 """
 
 MESSAGE assistant """Vulnerabilidade 1: Buffer Overflow
+
 Descrição: O uso da função strcpy sem verificar o tamanho da entrada permite que um atacante sobrescreva a memória adjacente, o que pode levar a corrupção de memória, falhas ou execução de código arbitrário.
+
 Gravidade: Alta
+
 Sugestão de correção: Utilize funções seguras que limitam o número de bytes copiados, como strncpy ou strlcpy.
 
 Exemplo de correção:

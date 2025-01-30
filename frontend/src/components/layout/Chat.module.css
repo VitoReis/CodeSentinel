@@ -1,6 +1,6 @@
 .Chat {
   display: flex;
-  flex-direction: line;
+  flex-direction: row;
   justify-content: space-around;
   padding-left: 5rem;
   padding-right: 5rem;
@@ -25,7 +25,7 @@
   font-style: italic;
   font-size: 2rem;
   -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: #ee0a0ae1;
+  -webkit-text-stroke-color: #ee0a0a;
   white-space: nowrap;
   @media (max-width: 1080px) {
     font-size: 1.5rem;
@@ -34,7 +34,7 @@
 
 .ButtonsArea {
   display: flex;
-  flex-direction: line;
+  flex-direction: row;
   justify-content: center;
   align-self: center;
   @media (max-width: 1080px) {
@@ -44,7 +44,7 @@
 
 .ActionButtons {
   display: flex;
-  flex-direction: line;
+  flex-direction: row;
   justify-content: center;
   align-self: center;
 }
