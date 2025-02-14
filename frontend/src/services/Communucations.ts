@@ -11,7 +11,7 @@ export async function groqAnalyze(
     language,
   });
 
-  return res.data.choices[0]?.message?.content;
+  return res.data;
 }
 
 export async function groqModels(): Promise<string[]> {

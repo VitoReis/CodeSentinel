@@ -49,6 +49,8 @@ Groq Cloud (Remoto):
 
 `npm install fastembed`
 
+`npm install faiss-node`
+
 ## CRIAÇÃO DO FRONTEND
 
 `npx create-react-app client --template typescript`

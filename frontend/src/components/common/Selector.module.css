@@ -14,12 +14,23 @@
   box-shadow: 0 0 10px #ee0a0a;
   color: #ffffff;
   background-color: #ee0a0a;
-  transition: 0.3s;
+  transition: 0.15s;
   .ModelSelector,
   .ModelSelector:hover {
-    background-color: transparent;
+    background-color: #ee0a0a;
     color: #ffffff;
     transition: 0.3s;
+    cursor: pointer;
+  }
+  .ModelSelector:disabled,
+  .ModelSelector:disabled:hover {
+    color: #404040;
+    border: 2px solid #404040;
+    cursor: default;
+  }
+  .ModelSelector option {
+    color: #ffffff;
+    background-color: #ee0a0a;
   }
 }
 
@@ -31,29 +42,11 @@
   justify-content: center;
   text-align: center;
   font-size: 1rem;
-  border: 0px solid #ee0a0a;
+  border: none;
   border-radius: 10px;
   background-color: transparent;
   color: #ee0a0a;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-}
-
-.ModelSelector:hover {
-  background-color: transparent;
-  color: #ffffff;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.ModelSelector:disabled {
-  color: #404040;
-  border: 2px solid #404040;
-}
-
-.ModelSelector:disabled:hover {
-  color: #404040;
-  background-color: #101010;
-  cursor: default;
 }

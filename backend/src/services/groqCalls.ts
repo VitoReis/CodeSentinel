@@ -1,45 +1,66 @@
 import Groq from "groq-sdk";
 import { Request, Response } from "express";
 import { languages } from "../data/languages";
-import pdfParse from "pdf-parse";
-import { EmbeddingModel, FlagEmbedding } from "fastembed";
+// import {
+//   extractAndEmbed,
+//   retrieveEmbeddings,
+//   storeEmbeddings,
+//   generateQueryEmbedding,
+// } from "./embedding";
 
 require("dotenv").config();
 const fs = require("fs").promises;
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+let modelfile: string = "";
+
+export async function readModelfile(): Promise<void> {
+  modelfile = await fs.readFile("./data/Modelfile", "utf8");
+}
 
 export async function groqAnalyze(req: Request, res: Response) {
-  const { model, language, code } = req.body;
-  const context = await groqEmbed();
-
-  const modelfile: string = (
-    await fs.readFile("./data/Modelfile", "utf8")
-  ).replace("{MODEL}", model);
-
-  const message: string =
-    "CONTEXT: \n" +
-    context +
-    "\n" +
-    modelfile +
-    "\nLANGUAGE: " +
-    language +
-    "\nCODE:\n" +
-    code;
-
   try {
+    const {
+      model = "llama-3.3-70b-versatile",
+      language = "Português (Brasil)",
+      code,
+    } = req.body;
+
+    if (!code) {
+      return res.status(400).json({ error: "Code field is empty." });
+    }
+
+    // let context: number[][] = [];
+    let message: string;
+
+    // const embed = await extractAndEmbed();
+    // if (embed.length > 0) {
+    //   await storeEmbeddings(embed);
+    //   const queryEmbedding = await generateQueryEmbedding(code);
+    //   context = await retrieveEmbeddings(queryEmbedding);
+    //   const truncatedContext = context.slice(0, 2);
+    //   message = `CONTEXT:\n${truncatedContext}\nLANGUAGE:\n${language}\nCODE:\n${code}`;
+    // } else {
+    message = `LANGUAGE:\n${language}\nCODE:\n${code}`;
+    // }
+
     const create = await groq.chat.completions.create({
       messages: [
+        {
+          role: "system",
+          content: modelfile,
+        },
         {
           role: "user",
           content: message,
         },
       ],
       model: model,
-      temperature: 0.4,
+      temperature: 0.3,
+      max_tokens: 1024,
       stream: false,
     });
     const reply = create.choices[0].message.content!.replace("{VULN}", "\n\n");
-    res.json(reply);
+    res.status(200).json(reply);
   } catch (error) {
     res.status(500).send(`Error analyzing code\n${error}`);
   }
@@ -50,37 +71,17 @@ export async function groqModels(req: Request, res: Response) {
     const list = await groq.models.list();
     const models: string[] = list.data
       .map((model: { id: string }) => model.id)
-      .filter((id: string) => id !== "whisper-large-v3");
+      .filter(
+        (id: string) =>
+          ![
+            "distil-whisper-large-v3-en",
+            "whisper-large-v3",
+            "whisper-large-v3-turbo",
+          ].includes(id)
+      );
     res.send(models);
   } catch (error) {
     res.status(500).send(`Error listing models\n${error}`);
-  }
-}
-
-export async function groqEmbed() {
-  const embeddingModel = await FlagEmbedding.init({
-    model: EmbeddingModel.BGEBaseEN,
-  });
-
-  try {
-    const pdfBuffer = await fs.readFile("./data/cwe_latest.pdf");
-    const pdfData = await pdfParse(pdfBuffer);
-    const embed = [pdfData.text];
-
-    try {
-      const embeddings = embeddingModel.embed(embed, 2);
-      const allEmbeddings = [];
-
-      for await (const batch of embeddings) {
-        allEmbeddings.push(batch);
-      }
-      return allEmbeddings;
-    } catch (error) {
-      console.error(`Error creating embeddings for chunk:`, error);
-      return undefined;
-    }
-  } catch (error) {
-    console.error("Error processing PDF file:", error);
   }
 }
 

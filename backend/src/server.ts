@@ -1,7 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { groqEmbed } from "./services/groqCalls";
 
 const app = express();
 const port: number = 8000;
@@ -11,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(router);
 
-const startServer = async () => {
+function startServer(): void {
   try {
     app.listen(port, () => {
       console.log(
@@ -21,6 +20,6 @@ const startServer = async () => {
   } catch (error) {
     console.log("\nUNABLE TO START SERVER\n", error);
   }
-};
+}
 
 startServer();
