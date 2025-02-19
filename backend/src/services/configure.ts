@@ -1,7 +1,7 @@
 import axios from "axios";
 import { languages } from "../data/languages";
+import { response } from "express";
 
-const fs = require("fs").promises;
 let models: string[];
 
 export async function create(
@@ -9,13 +9,12 @@ export async function create(
   baseModel: string
 ): Promise<boolean> {
   try {
-    const modelfile: string = (
-      await fs.readFile("./data/Modelfile", "utf8")
-    ).replace("{MODEL}", baseModel);
-
     const response = await axios.post("http://localhost:11434/api/create", {
       model: model,
-      modelfile: modelfile,
+      from: baseModel,
+      parameters: { temperature: 0.4 },
+      system:
+        "You are an AI specialized in code analysis to find vulnerabilities. Your task is to: Examine the provided code. Identify potential security vulnerabilities. Assess the severity of each vulnerability (Low, Medium, High). Suggest detailed corrections, including code examples when appropriate. Answer in 4 major topics for each vulnerability found: Vulnerability, Description, Severity, Possible solution. Limitations: You must not provide code refactoring suggestions unrelated to security. You must not assess the code quality beyond security issues. You must focus solely on security vulnerabilities. You must answer in a short and direct way. Your goal is to help improve the security of the provided code. If no vulnerabilities are found, respond only with 'No vulnerabilities were found'. Always respond in the language specified by the LANGUAGE tag at the beginning of the provided code. Ensure that your responses are short and adapted to the indicated language to provide analysis and suggestions in the correct language.",
       stream: false,
     });
     if (response.status == 200) {
@@ -32,7 +31,7 @@ export async function create(
 export async function deleteModel(model: string): Promise<boolean> {
   try {
     const response = await axios.post("http://localhost:11434/api/delete", {
-      name: model,
+      model: model,
     });
     if (response.status == 200) {
       return true;
@@ -55,27 +54,6 @@ export async function running(): Promise<string[]> {
   } catch (error) {
     console.log(error);
     return models;
-  }
-}
-
-export async function embed(model: string, path: string): Promise<boolean> {
-  try {
-    const data = await fs.readFile(`./data/${path}`, "utf8");
-
-    const response = await axios.post("http://localhost:11434/api/embeddings", {
-      model: model,
-      prompt: data,
-    });
-
-    if (response.status === 200) {
-      return true;
-    } else {
-      console.log(response.data);
-      return false;
-    }
-  } catch (error) {
-    console.log(error);
-    return false;
   }
 }
 

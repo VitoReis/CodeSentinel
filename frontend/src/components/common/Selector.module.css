@@ -3,39 +3,50 @@
   flex-direction: line;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ee0a0ae1;
+  border: 2px solid #ee0a0a;
   border-radius: 10px;
   padding: 0.2rem;
   height: 2.5rem;
   margin: 0.5rem;
 }
 
+.ModelArea:hover {
+  box-shadow: 0 0 10px #ee0a0a;
+  color: #ffffff;
+  background-color: #ee0a0a;
+  transition: 0.15s;
+  .ModelSelector,
+  .ModelSelector:hover {
+    background-color: #ee0a0a;
+    color: #ffffff;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .ModelSelector:disabled,
+  .ModelSelector:disabled:hover {
+    color: #404040;
+    border: 2px solid #404040;
+    cursor: default;
+  }
+  .ModelSelector option {
+    color: #ffffff;
+    background-color: #ee0a0a;
+  }
+}
+
 .ModelSelector {
-  width: 7rem;
+  width: 9rem;
   height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-size: 1rem;
-  border: 0px solid #ee0a0ae1;
+  border: none;
   border-radius: 10px;
-  background-color: #101010;
-  color: #ee0a0ae1;
-  transition: 0.3s;
-}
-
-.ModelSelector:disabled {
-  color: #404040;
-  border: 2px solid #404040;
-}
-
-.ModelSelector:hover {
-  cursor: pointer;
-}
-
-.ModelSelector:disabled:hover {
-  color: #404040;
-  background-color: #101010;
-  cursor: default;
+  background-color: transparent;
+  color: #ee0a0a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 }

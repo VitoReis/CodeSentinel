@@ -3,7 +3,6 @@ import { colors } from "../utils/console";
 
 import {
   create,
-  embed,
   running,
   deleteModel,
   addLanguage,
@@ -21,11 +20,10 @@ const options =
   "*        SERVER OPTIONS      *\n" +
   "******************************\n" +
   "* 1 - CREATE NEW MODEL       *\n" +
-  "* 2 - EMBED MODEL            *\n" +
-  "* 3 - LIST MODELS            *\n" +
-  "* 4 - DELETE MODEL           *\n" +
-  "* 5 - ADD NEW LANGUAGE       *\n" +
-  "* 6 - DELETE LANGUAGE        *\n" +
+  "* 2 - LIST MODELS            *\n" +
+  "* 3 - DELETE MODEL           *\n" +
+  "* 4 - ADD NEW LANGUAGE       *\n" +
+  "* 5 - DELETE LANGUAGE        *\n" +
   "* 0 - CLOSE AND START SERVER *\n" +
   "******************************\n" +
   "ENTER YOUR CHOICE: ";
@@ -71,23 +69,6 @@ export async function menu(): Promise<void> {
         }
         break;
       case 2:
-        model = await askQuestion(
-          `FOR WHICH MODEL DO YOU WANT ${colors.fgGreen}GENERATE${colors.reset} ${colors.fgYellow}EMBEDS${colors.reset}? `
-        );
-        path = await askQuestion(
-          `WHAT IS THE NAME OF YOUR ${colors.fgYellow}EMBEDDINGS FILE${colors.reset} AND ${colors.fgMagenta}EXTENSION${colors.reset}? (EX: EMBED.TXT) `
-        );
-        console.log(`\nGENERATING EMBED...\n`);
-        response = await embed(model, path);
-        if (response) {
-          console.log(`\n${colors.fgGreen}MODEL EMBEDDED${colors.reset}\n`);
-        } else {
-          console.log(
-            `\n${colors.fgBrightRed}UNABLE TO GENERATE EMBED FOR MODEL${colors.reset}\n`
-          );
-        }
-        break;
-      case 3:
         models = await running();
         console.log(
           `\n${colors.fgGreen}AVAILABLE MODELS${colors.reset}:${models.map(
@@ -95,7 +76,7 @@ export async function menu(): Promise<void> {
           )}`
         );
         break;
-      case 4:
+      case 3:
         model = await askQuestion(
           `WHAT IS THE NAME OF THE MODEL YOU WANT TO ${colors.fgRed}DELETE${colors.reset}? `
         );
@@ -108,7 +89,7 @@ export async function menu(): Promise<void> {
           );
         }
         break;
-      case 5:
+      case 4:
         language = await askQuestion(
           `WHICH ${colors.fgYellow}LANGUAGE${colors.reset} DO YOU WANNA ${colors.fgGreen}ADD${colors.reset}? `
         );
@@ -121,7 +102,7 @@ export async function menu(): Promise<void> {
           );
         }
         break;
-      case 6:
+      case 5:
         language = await askQuestion(
           `WHICH ${colors.fgYellow}LANGUAGE${colors.reset} DO YOU WANNA ${colors.fgRed}DELETE${colors.reset}? `
         );

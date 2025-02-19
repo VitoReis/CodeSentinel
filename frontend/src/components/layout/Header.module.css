@@ -8,27 +8,32 @@
   padding-left: 1rem;
   padding-right: 1rem;
   background: linear-gradient(to right, #282828, #202020);
-  color: #ee0a0ae1;
+  color: #ee0a0a;
   height: 4rem;
   width: 100vw;
   justify-content: left;
   align-items: center;
   overflow: hidden;
+  border-bottom: 1px solid #000000;
+  @media (max-width: 416px) {
+    justify-content: center;
+    padding: 0;
+  }
 }
 
 .Title {
   margin-top: 1rem;
-  color: transparent;
-  font-style: italic;
+  color: #ee0a0a;
+  font-family: "Poppins", sans-serif;
   font-size: 2rem;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: #ee0a0ae1;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #000000;
   white-space: nowrap;
   @media (max-width: 1080px) {
     font-size: 1.5rem;
   }
   @media (max-width: 416px) {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 }
 

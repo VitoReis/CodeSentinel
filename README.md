@@ -37,9 +37,15 @@ Groq Cloud (Remoto):
 
 `npm install groq-sdk`
 
-`npm install -D typescript @types/express @types/node @types/cors @types/body-parser`
+`npm install -D typescript @types/express @types/node @types/cors @types/body-parser @types/pdf-parse`
 
 `npx tsc --init`
+
+`npm install pdf-parse`
+
+`npm install fastembed`
+
+`npm install faiss-node`
 
 ## CRIAÇÃO DO FRONTEND
 

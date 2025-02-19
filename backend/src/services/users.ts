@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Request, Response } from "express";
 import { languages } from "../data/languages";
+import { generateQueryEmbedding, retrieveEmbeddings } from "./embeddings";
 
 export async function availableModels(req: Request, res: Response) {
   try {
@@ -25,13 +26,21 @@ export async function availableLanguages(req: Request, res: Response) {
 export async function analyze(req: Request, res: Response): Promise<void> {
   const { model, code, language } = req.body;
 
+  let context: number[][];
+  let truncatedContext: number[][] = [];
+
+  const queryEmbedding = await generateQueryEmbedding(code);
+  context = await retrieveEmbeddings(queryEmbedding);
+  truncatedContext = context.slice(0, 2);
+
   try {
     const result = await axios.post("http://localhost:11434/api/generate", {
       model: model,
-      prompt: `LANGUAGE: ${language}\n` + code,
+      prompt: `CONTEXT: ${truncatedContext}\nLANGUAGE: ${language}\n` + code,
       stream: false,
     });
-    res.json({ reply: result.data.response });
+
+    res.status(200).json({ reply: result.data.response });
   } catch (error) {
     res.status(500).send(`Error processing code ${error}`);
   }

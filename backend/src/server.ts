@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import { running } from "./services/configure";
 import { menu } from "./application/menu";
+import { extractAndEmbed, storeEmbeddings } from "./services/embeddings";
 
 const app = express();
 const port: number = 8000;
@@ -20,6 +21,10 @@ const startServer = async () => {
     Promise.all(models);
 
     const modelsLength = models ? models.length : 0;
+    const embed = await extractAndEmbed();
+    if (embed.length > 0) {
+      await storeEmbeddings(embed);
+    }
 
     const server = app.listen(port, () => {
       console.log(

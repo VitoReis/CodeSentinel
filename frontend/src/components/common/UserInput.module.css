@@ -9,7 +9,12 @@
   min-width: 15rem;
   max-width: 100%;
   max-height: 100%;
-  background-color: #3a3a3a;
+  background: radial-gradient(
+    circle,
+    rgba(80, 80, 80, 1) 0%,
+    rgba(60, 60, 60, 1) 50%,
+    rgba(40, 40, 40, 1) 100%
+  );
   border: 0px;
   resize: none;
   overflow-x: none;
@@ -22,5 +27,6 @@
 }
 
 .UserEntry:focus {
-  outline: 2px solid #ee0a0ae1;
+  outline: 2px solid #ee0a0a;
+  box-shadow: 0 0 10px #ee0a0a;
 }
