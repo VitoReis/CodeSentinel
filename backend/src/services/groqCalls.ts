@@ -55,7 +55,7 @@ export async function groqAnalyze(req: Request, res: Response) {
         },
       ],
       model: model,
-      temperature: 0.3,
+      temperature: 0.2,
       max_tokens: 1024,
       stream: false,
     });
