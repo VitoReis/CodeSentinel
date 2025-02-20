@@ -12,7 +12,6 @@ export async function sendCode(
   });
 
   const reply: string = res.data.reply;
-
   return reply;
 }
 

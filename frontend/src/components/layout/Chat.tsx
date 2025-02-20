@@ -53,6 +53,18 @@ export default function Chat(): JSX.Element {
   }, []);
 
   useEffect(() => {
+    if (modelList.length > 0) {
+      setModel(modelList[0]);
+    }
+  }, [modelList]);
+
+  useEffect(() => {
+    if (langList.length > 0) {
+      setLanguage(langList[0]);
+    }
+  }, [langList]);
+
+  useEffect(() => {
     if (loading) {
       modelRef.current!.disabled = true;
       languageRef.current!.disabled = true;

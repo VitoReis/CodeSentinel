@@ -19,6 +19,7 @@ export default function UserInput(props: UserInputProps): JSX.Element {
       }
       rows={1}
       cols={1}
+      spellCheck="false"
     />
   );
 }

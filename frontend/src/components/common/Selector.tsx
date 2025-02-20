@@ -18,7 +18,9 @@ export default function Selector(props: SelectorProps): JSX.Element {
         onChange={props.action}
       >
         {props.list.map((item) => (
-          <option value={item}>{item}</option>
+          <option className={styles.ModelOption} value={item}>
+            {item}
+          </option>
         ))}
       </select>
     </div>

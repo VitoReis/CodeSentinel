@@ -36,7 +36,7 @@ export async function analyze(req: Request, res: Response): Promise<void> {
   try {
     const result = await axios.post("http://localhost:11434/api/generate", {
       model: model,
-      prompt: `CONTEXT: ${truncatedContext}\nLANGUAGE: ${language}\n` + code,
+      prompt: `LANGUAGE: ${language}\nCONTEXT: ${truncatedContext}\n` + code,
       stream: false,
     });
 
